@@ -20,7 +20,7 @@ module Ec2Metadata
     end
 
     def revisions
-      @revisions ||= Net::HTTP.get(DEFAULT_HOST, "/").split(/$/).map(&:strip)
+      @revisions ||= Ec2Metadata.get("/").split(/$/).map(&:strip)
     end
 
     def clear_instances

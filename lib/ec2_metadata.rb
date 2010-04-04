@@ -6,6 +6,11 @@ module Ec2Metadata
 
   autoload :Root, 'ec2_metadata/root'
   autoload :Base, 'ec2_metadata/base'
+  autoload :NestableGet, 'ec2_metadata/nestable_get'
 
   extend Root
+
+  def self.get(path)
+    Net::HTTP.get(DEFAULT_HOST, path)
+  end
 end
