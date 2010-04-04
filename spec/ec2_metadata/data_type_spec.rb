@@ -7,14 +7,13 @@ describe Ec2Metadata::DataType do
     REVISIONS.each do |revision|
       describe revision do
         before do
-          
+          @meta_data = Ec2Metadata::DataType.new("/#{revision}/meta-data/")
+          Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/meta-data/").once.
+            and_return(ALL_ATTR_NAMES.join("\n"))
         end
 
         SIMPLE_ATTR_NAMES.each do |attr_name|
           it "(#{attr_name.gsub(/-/, '_').inspect}) should return #{attr_name}" do
-            @meta_data = Ec2Metadata::DataType.new("/#{revision}/meta-data/")
-            Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/meta-data/").once.
-              and_return(ALL_ATTR_NAMES.join("\n"))
             Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/meta-data/#{attr_name}").once.
               and_return("#{revision}_#{attr_name}")
             @meta_data[attr_name].should == "#{revision}_#{attr_name}"
@@ -22,14 +21,13 @@ describe Ec2Metadata::DataType do
           end
         end
 
-#         it "('placement') should return object like Hash" do
-#           Net::HTTP.should_receive(:get).with("169.254.169.254", "/").and_return(REVISIONS.join("\n"))
-#           Net::HTTP.should_receive(:get).with("169.254.169.254", "latest/meta-data/placement/").and_return("availability-zone")
-#           obj = Ec2Metadata[:placement]
-#           obj.keys.should == ["availability_zone"]
-#           Net::HTTP.should_receive(:get).with("169.254.169.254", "latest/meta-data/placement/availability-zone").and_return("us-east-1a")
-#           obj[:availability_zone].should == "us-east-1a"
-#         end
+        it "('placement') should return object like Hash" do
+          Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/meta-data/placement/").and_return("availability-zone")
+          obj = @meta_data[:placement]
+          obj.child_names.should == ["availability-zone"]
+          Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/meta-data/placement/availability-zone").and_return("us-east-1a")
+          obj[:availability_zone].should == "us-east-1a"
+        end
 
 #         it "('block_device_mapping') should return object like Hash" do
 #           Net::HTTP.should_receive(:get).with("169.254.169.254", "/").and_return(REVISIONS.join("\n"))
