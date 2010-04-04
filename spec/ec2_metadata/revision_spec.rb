@@ -5,7 +5,7 @@ describe Ec2Metadata::Root do
   describe :[] do
     REVISIONS.each do |revision|
 
-      describe "revision" do
+      describe revision do
         before do
           @rev_obj = Ec2Metadata::Revision.new("/#{revision}/")
           Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/").once.
