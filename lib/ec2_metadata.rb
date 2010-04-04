@@ -3,12 +3,10 @@ require 'net/http'
 module Ec2Metadata
   DEFAULT_HOST = "169.254.169.254".freeze
 
-  autoload :NestableGet, 'ec2_metadata/nestable_get'
   autoload :Base, 'ec2_metadata/base'
   autoload :NamedBase, 'ec2_metadata/named_base'
   autoload :Root, 'ec2_metadata/root'
   autoload :Revision, 'ec2_metadata/revision'
-  autoload :DataType, 'ec2_metadata/data_type'
 
   class << self
     def instance
