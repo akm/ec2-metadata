@@ -1,7 +1,6 @@
 require 'net/http'
 
 module Ec2Metadata
-  DEFAULT_REV = "latest".freeze
   DEFAULT_HOST = "169.254.169.254".freeze
 
   autoload :NestableGet, 'ec2_metadata/nestable_get'

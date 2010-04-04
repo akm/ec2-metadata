@@ -1,22 +1,8 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '../spec_helper'))
 
 describe Ec2Metadata::Root do
-  
-  REVISIONS = [
-    '1.0',
-    '2007-01-19',
-    '2007-03-01',
-    '2007-08-29',
-    '2007-10-10',
-    '2007-12-15',
-    '2008-02-01',
-    '2008-09-01',
-    '2009-04-04',
-    'latest'
-    ]
 
   describe :[] do
-
     before do
       @root = Ec2Metadata::Root.new
     end
