@@ -4,16 +4,16 @@ module Ec2Metadata
   class Root < Base
     def initialize(path = '/')
       @path = path
-      @default_child_name = 'latest'
+      @default_child_key = 'latest'
     end
 
-    def new_child(child_name)
-      logging("new_child(#{child_name.inspect})") do
-        Revision.new("#{path}#{child_name}/")
+    def new_child(child_key)
+      logging("new_child(#{child_key.inspect})") do
+        Revision.new("#{path}#{child_key}/")
       end
     end
 
-    def is_struct?(child_name)
+    def is_struct?(child_key)
       true
     end
     
