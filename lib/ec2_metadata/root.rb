@@ -1,35 +1,21 @@
 require 'ec2_metadata'
 
 module Ec2Metadata
-  module Root
-
-    def instances
-      @instances ||= {}
+  class Root < Base
+    def initialize(path = '/')
+      @path = path
+      @default_child_name = 'latest'
     end
 
-    def instance(revision = DEFAULT_REV)
-      instances[revision] ||= Base.new(revision)
-    end
-
-    def [](key)
-      if revisions.include?(key.to_s)
-        instance(key.to_s)
-      else
-        instance[key]
+    def new_child(child_name)
+      logging("new_child(#{child_name.inspect})") do
+        Revision.new("#{path}#{child_name}/")
       end
     end
 
-    def revisions
-      @revisions ||= Ec2Metadata.get("/").split(/$/).map(&:strip)
+    def is_struct?(child_name)
+      true
     end
-
-    def clear_instances
-      @instances = nil
-    end
-
-    def clear_revisions
-      @revisions = nil
-    end
-
+    
   end
 end

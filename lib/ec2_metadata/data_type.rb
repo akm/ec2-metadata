@@ -1,7 +1,7 @@
 require 'ec2_metadata'
 
 module Ec2Metadata
-  module NestableGet
-
+  class DataType < Base
+    
   end
 end
