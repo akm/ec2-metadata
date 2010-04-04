@@ -29,20 +29,16 @@ module Ec2Metadata
 
     def logging(msg)
       @indent ||= 0
-      if block_given?
-        disp = (" " * @indent) << msg
-        # puts(disp) 
-        @indent += 2
-        begin
-          result = yield
-        ensure
-          @indent -= 2
-        end
-        # puts "#{disp} => #{result.inspect}"
-        result
-      else
-        puts msg
+      disp = (" " * @indent) << msg
+      # puts(disp) 
+      @indent += 2
+      begin
+        result = yield
+      ensure
+        @indent -= 2
       end
+      # puts "#{disp} => #{result.inspect}"
+      result
     end
   end
 

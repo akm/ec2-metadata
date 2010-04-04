@@ -77,11 +77,7 @@ module Ec2Metadata
 
     def default_child
       logging("default_child") do
-        if default_child_key
-          @default_child ||= get(default_child_key)
-        else
-          nil
-        end
+        @default_child ||= get(default_child_key) if default_child_key
       end
     end
 
