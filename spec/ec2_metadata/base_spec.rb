@@ -1,13 +1,13 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '../spec_helper'))
 
-describe Ec2Metadata::DataType do
+describe Ec2Metadata::Base do
 
   describe :[] do
 
     REVISIONS.each do |revision|
       describe revision do
         before do
-          @meta_data = Ec2Metadata::DataType.new("/#{revision}/meta-data/")
+          @meta_data = Ec2Metadata::Base.new("/#{revision}/meta-data/")
           Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/meta-data/").once.
             and_return(ALL_ATTR_KEYS.join("\n"))
         end

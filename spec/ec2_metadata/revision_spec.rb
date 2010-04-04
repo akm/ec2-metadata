@@ -12,12 +12,12 @@ describe Ec2Metadata::Root do
             and_return(DATA_TYPES.join("\n"))
         end
 
-        it "should return Ec2Metadata::DataType for meta_data" do
+        it "should return Ec2Metadata::Base for meta_data" do
           meta_data = @rev_obj[:meta_data]
-          meta_data.class.should == Ec2Metadata::DataType
+          meta_data.class.should == Ec2Metadata::Base
         end
 
-        it "should return Ec2Metadata::DataType for user_data" do
+        it "should return Ec2Metadata::Base for user_data" do
           Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/user-data").once.
             and_return("#{revision}-user_data")
           user_data = @rev_obj[:user_data]

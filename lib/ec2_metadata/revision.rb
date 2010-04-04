@@ -11,7 +11,7 @@ module Ec2Metadata
       logging("new_child(#{child_key.inspect})") do
         child_path = "#{path}#{child_key}"
         child_path << '/' if is_struct?(child_key)
-        DataType.new(child_path)
+        Base.new(child_path)
       end
     end
 

@@ -34,7 +34,7 @@ describe Ec2Metadata::Root do
         and_return(DATA_TYPES.join("\n"))
       Net::HTTP.should_not_receive(:get).with("169.254.169.254", "/latest/meta-data/")
       obj = @root['meta-data']
-      obj.class.should == Ec2Metadata::DataType
+      obj.class.should == Ec2Metadata::Base
     end
   end
   
