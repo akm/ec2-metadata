@@ -32,6 +32,7 @@ module Ec2Metadata
       end
       @child_keys
     end
+    alias_method :keys, :child_keys
 
     def get(child_key)
       logging("#{self.class.name}.get(#{child_key.inspect})") do

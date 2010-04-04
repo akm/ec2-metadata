@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Ec2Metadata do
-  
+
   describe :[] do
     before do
       Ec2Metadata.clear_instance
