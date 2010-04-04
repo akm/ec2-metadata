@@ -18,13 +18,17 @@ module Ec2Metadata
     def child_keys
       unless defined?(@child_keys)
         lines = Ec2Metadata.get("#{path}").split(/$/).map(&:strip)
-#         if lines.all?{|line| line =~ /^[\w]+\=.*?/}
-#           @child_keys = []
-#           lines.each do |line|            
-#           end
-#         else
-#         end
-        @child_keys = lines
+        if lines.all?{|line| line =~ /^[\w]+\=.*?/}
+          @child_keys = []
+          @child_names = {}
+          lines.each do |line|
+            key, name = line.split(/\=/, 2)
+            @child_keys << key
+            @child_names[key] = name
+          end
+        else
+          @child_keys = lines
+        end
       end
       @child_keys
     end
@@ -56,12 +60,16 @@ module Ec2Metadata
     end
 
     def is_struct?(child_key)
-      child_key = child_key.to_s.gsub(/_/, '-') << '/'
-      child_keys.include?(child_key)
+      k = child_key.to_s.gsub(/_/, '-') << '/'
+      child_keys.include?(k) || (defined?(@child_names) && @child_names.keys.include?(child_key))
     end
 
     def new_child(child_key)
-      Base.new("#{path}#{child_key}/")
+      if defined?(@child_names) && (name = @child_names[child_key])
+        NamedBase.new(name, "#{path}#{child_key}/")
+      else
+        Base.new("#{path}#{child_key}/")
+      end
     end
 
     alias_method :[], :get

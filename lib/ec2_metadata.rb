@@ -5,6 +5,7 @@ module Ec2Metadata
 
   autoload :NestableGet, 'ec2_metadata/nestable_get'
   autoload :Base, 'ec2_metadata/base'
+  autoload :NamedBase, 'ec2_metadata/named_base'
   autoload :Root, 'ec2_metadata/root'
   autoload :Revision, 'ec2_metadata/revision'
   autoload :DataType, 'ec2_metadata/data_type'
@@ -32,14 +33,14 @@ module Ec2Metadata
       @indent ||= 0
       if block_given?
         disp = (" " * @indent) << msg
-#        puts(disp) 
+        # puts(disp) 
         @indent += 2
         begin
           result = yield
         ensure
           @indent -= 2
         end
-#        puts "#{disp} => #{result.inspect}"
+        # puts "#{disp} => #{result.inspect}"
         result
       else
         puts msg
