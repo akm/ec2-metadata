@@ -18,7 +18,6 @@ describe Ec2Metadata do
       end
     end
 
-
     REVISIONS.each do |rev|
       describe "with revision #{rev}" do
         it "('#{rev}')[attr_name] should return value of respose for http://169.254.169.254/#{rev}/meta-data/attr_name" do

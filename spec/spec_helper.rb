@@ -23,11 +23,11 @@ REVISIONS = [
 
 DATA_TYPES = %w(dynamic user-data meta-data)
 
-ATTR_NAMES = %w(ami-id ami-launch-index ami-manifest-path) +
-  # block-device-mapping/
+SIMPLE_ATTR_NAMES = %w(ami-id ami-launch-index ami-manifest-path) +
   %w(hostname instance-action instance-id instance-type kernel-id) +
   %w(local-hostname local-ipv4) +
-  # placement/
   %w(public-hostname public-ipv4) +
-  # public-keys/
   %w(ramdisk-id reservation-id security-groups)
+
+ALL_ATTR_NAMES = SIMPLE_ATTR_NAMES + 
+  %w(block-device-mapping/ placement/ public-keys/)
