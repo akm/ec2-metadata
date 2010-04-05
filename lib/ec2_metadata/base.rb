@@ -36,7 +36,7 @@ module Ec2Metadata
 
     def get(child_key)
       logging("#{self.class.name}.get(#{child_key.inspect})") do
-        child_key = child_key.to_s.gsub(/_/, '-')
+        child_key = Ec2Metadata.formalize_key(child_key)
         if children.has_key?(child_key)
           result = children[child_key]
         else
@@ -61,7 +61,7 @@ module Ec2Metadata
     end
 
     def is_struct?(child_key)
-      k = child_key.to_s.gsub(/_/, '-') << '/'
+      k = Ec2Metadata.formalize_key(child_key) << '/'
       child_keys.include?(k) || (defined?(@child_names) && @child_names.keys.include?(child_key))
     end
 
@@ -80,6 +80,34 @@ module Ec2Metadata
         @default_child ||= get(default_child_key) if default_child_key
       end
     end
+
+    def to_hash
+      keys.inject({}) do |dest, key|
+        value = get(key)
+        dest[key] = value.respond_to?(:to_hash) ? value.to_hash : value
+        dest
+      end
+    end
+
+    def from_hash(hash)
+      hash = hash.inject({}){|d, (k, v)| d[Ec2Metadata.formalize_key(k)] = v; d}
+      @child_keys = hash.keys
+      @children = {}
+      hash.each do |key, value|
+        if value.is_a?(Array)
+          idx = 0
+          value = value.inject({}){|d, v| d[idx] = v; idx += 1; d}
+        end
+        if value.is_a?(Hash)
+          child = new_child(key)
+          @children[key] = child
+          child.from_hash(value)
+        else
+          @children[key] = value
+        end
+      end
+    end
+
 
     private
     def logging(msg, &block)
