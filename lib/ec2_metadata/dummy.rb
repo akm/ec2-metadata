@@ -1,10 +1,10 @@
 module Ec2Metadata
   module Dummy
-    class << self
-      YAML_FILENAME = 'ec2_metadata.yml'.freeze
-      YAML_SEARCH_DIRS = ['./config', '.', '~', '/etc'].freeze
-      ENV_SPECIFIED_PATH = "EC2_METADATA_DUMMY_YAML".freeze
+    YAML_FILENAME = 'ec2_metadata.yml'.freeze
+    YAML_SEARCH_DIRS = ['./config', '.', '~', '/etc'].freeze
+    ENV_SPECIFIED_PATH = "EC2_METADATA_DUMMY_YAML".freeze
 
+    class << self
       def yaml_paths
         dirs = YAML_SEARCH_DIRS.dup
         if Module.constants.include?('RAILS_ROOT')
@@ -27,8 +27,12 @@ module Ec2Metadata
         erb.filename = path
         text = erb.result
         Ec2Metadata.from_hash(YAML.load(text))
+        @loaded_yaml_path = path
       end
-    
+      
+      def loaded_yaml_path
+        @loaded_yaml_path
+      end
     end
   end
 end

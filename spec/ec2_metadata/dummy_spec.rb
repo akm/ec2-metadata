@@ -81,6 +81,7 @@ describe Ec2Metadata::Dummy do
       IO.should_receive(:read).with(yaml_path).and_return(YAML.dump(yaml))
       Ec2Metadata.should_receive(:from_hash).with(yaml)
       Ec2Metadata::Dummy.load_yaml(yaml_path)
+      Ec2Metadata::Dummy.loaded_yaml_path.should == yaml_path
     end
   end
   
