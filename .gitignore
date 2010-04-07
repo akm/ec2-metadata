@@ -1,21 +1,22 @@
-## MAC OS
-.DS_Store
 
-## TEXTMATE
-*.tmproj
-tmtags
+
+
+
 
 ## EMACS
-*~
-\#*
-.\#*
-
+## MAC OS
+## PROJECT::GENERAL
+## PROJECT::SPECIFIC
+## TEXTMATE
 ## VIM
 *.swp
-
-## PROJECT::GENERAL
+*.tmproj
+*~
+.DS_Store
+.\#*
+/ec2-metadata-0.1.0.gem
+\#*
 coverage
-rdoc
 pkg
-
-## PROJECT::SPECIFIC
+rdoc
+tmtags
