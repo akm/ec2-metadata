@@ -46,7 +46,8 @@ describe Ec2Metadata do
           'local-hostname' => "ip-10-123-123-123",
           'hostname' => "ip-10-123-123-123",
           'local-ipv4' => "10.123.123.123",
-          'public-ipv4' => "75.101.241.136"
+          'public-ipv4' => "75.101.241.136",
+          'public_keys' => [{'openssh-key' => "ssh-rsa 1234567890"}]
         }
       })
       Ec2Metadata[:user_data].should == "user-data-line1\nuser-data-line2\nuser-data-line3"
@@ -57,6 +58,8 @@ describe Ec2Metadata do
       Ec2Metadata['hostname'].should == "ip-10-123-123-123"
       Ec2Metadata['local-ipv4'].should == "10.123.123.123"
       Ec2Metadata['public-ipv4'].should == "75.101.241.136"
+      Ec2Metadata['public-keys']['0'].keys.should == ['openssh-key']
+      Ec2Metadata['public-keys']['0']['openssh-key'].should == "ssh-rsa 1234567890"
     end
     
   end

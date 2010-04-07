@@ -7,6 +7,7 @@ module Ec2Metadata
   autoload :NamedBase, 'ec2_metadata/named_base'
   autoload :Root, 'ec2_metadata/root'
   autoload :Revision, 'ec2_metadata/revision'
+  autoload :Dummy, 'ec2_metadata/dummy'
 
   DEFAULT_REVISION = 'latest'
 
@@ -64,4 +65,8 @@ module Ec2Metadata
   class NotFoundError < StandardError
   end
 
+end
+
+unless ENV['EC2_METADATA_DUMMY_DISABLED'] =~ /yes|true|on/i
+  Ec2Metadata::Dummy.search_and_load_yaml
 end
