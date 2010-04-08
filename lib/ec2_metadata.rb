@@ -8,6 +8,7 @@ module Ec2Metadata
   autoload :Root, 'ec2_metadata/root'
   autoload :Revision, 'ec2_metadata/revision'
   autoload :Dummy, 'ec2_metadata/dummy'
+  autoload :Command, 'ec2_metadata/command'
 
   DEFAULT_REVISION = 'latest'
 

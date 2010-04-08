@@ -1,6 +1,10 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '../spec_helper'))
 
 describe Ec2Metadata::Dummy do
+  after(:all) do
+    Ec2Metadata::Dummy.instance_variable_set(:@loaded_yaml_path, nil)
+  end
+
   describe :yaml_paths do
     it "default" do
       ENV.should_receive(:[]).with("EC2_METADATA_DUMMY_YAML").once.and_return(nil)
