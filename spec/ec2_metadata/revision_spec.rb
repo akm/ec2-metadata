@@ -8,7 +8,7 @@ describe Ec2Metadata::Root do
       describe revision do
         before do
           @rev_obj = Ec2Metadata::Revision.new("/#{revision}/")
-          Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/").once.
+          Ec2Metadata.should_receive(:get).with("/#{revision}/").once.
             and_return(DATA_TYPES.join("\n"))
         end
 
@@ -18,7 +18,7 @@ describe Ec2Metadata::Root do
         end
 
         it "should return Ec2Metadata::Base for user_data" do
-          Net::HTTP.should_receive(:get).with("169.254.169.254", "/#{revision}/user-data").once.
+          Ec2Metadata.should_receive(:get).with("/#{revision}/user-data").once.
             and_return("#{revision}-user_data")
           user_data = @rev_obj[:user_data]
           user_data.should == "#{revision}-user_data"

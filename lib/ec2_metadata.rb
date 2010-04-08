@@ -1,4 +1,5 @@
 require 'net/http'
+Net::HTTP.version_1_2
 
 module Ec2Metadata
   DEFAULT_HOST = "169.254.169.254".freeze
@@ -40,7 +41,10 @@ module Ec2Metadata
 
     def get(path)
       logging("Ec2Metadata.get(#{path.inspect})") do
-        Net::HTTP.get(DEFAULT_HOST, path)
+        Net::HTTP.start(DEFAULT_HOST) do |http|
+          res = http.get(path)
+          res.is_a?(Net::HTTPSuccess) ? res.body : nil
+        end
       end
     end
 

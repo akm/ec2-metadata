@@ -9,7 +9,7 @@ describe Ec2Metadata::Root do
 
     REVISIONS.each do |rev|
       it "should return Revision for #{rev}" do
-        Net::HTTP.should_receive(:get).with("169.254.169.254", "/").once.
+        Ec2Metadata.should_receive(:get).with("/").once.
           and_return(REVISIONS.join("\n"))
         revision = @root[rev]
         revision.class.should == Ec2Metadata::Revision
@@ -17,22 +17,22 @@ describe Ec2Metadata::Root do
     end
 
     it "should return latest DataType for user-data" do
-      Net::HTTP.should_receive(:get).with("169.254.169.254", "/").once.
+      Ec2Metadata.should_receive(:get).with("/").once.
         and_return(REVISIONS.join("\n"))
-      Net::HTTP.should_receive(:get).with("169.254.169.254", "/latest/").once.
+      Ec2Metadata.should_receive(:get).with("/latest/").once.
         and_return(DATA_TYPES.join("\n"))
-      Net::HTTP.should_receive(:get).with("169.254.169.254", "/latest/user-data").once.
+      Ec2Metadata.should_receive(:get).with("/latest/user-data").once.
         and_return("test-user-data1")
       obj = @root['user-data']
       obj.should == "test-user-data1"
     end
 
     it "should return latest DataType for meta-data" do
-      Net::HTTP.should_receive(:get).with("169.254.169.254", "/").once.
+      Ec2Metadata.should_receive(:get).with("/").once.
         and_return(REVISIONS.join("\n"))
-      Net::HTTP.should_receive(:get).with("169.254.169.254", "/latest/").once.
+      Ec2Metadata.should_receive(:get).with("/latest/").once.
         and_return(DATA_TYPES.join("\n"))
-      Net::HTTP.should_not_receive(:get).with("169.254.169.254", "/latest/meta-data/")
+      Ec2Metadata.should_not_receive(:get).with("/latest/meta-data/")
       obj = @root['meta-data']
       obj.class.should == Ec2Metadata::Base
     end

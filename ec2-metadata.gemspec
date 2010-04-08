@@ -5,13 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ec2-metadata}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Takeshi AKIMA"]
-  s.date = %q{2010-04-04}
+  s.date = %q{2010-04-08}
+  s.default_executable = %q{ec2-metadata}
   s.description = %q{ec2-metadata provides to access metadata, and you can use in outside of ec2 like in ec2}
   s.email = %q{akm2000@gmail.com}
+  s.executables = ["ec2-metadata"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -23,18 +25,28 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "bin/ec2-metadata",
+     "ec2-metadata.gemspec",
      "lib/ec2_metadata.rb",
      "lib/ec2_metadata/base.rb",
+     "lib/ec2_metadata/command.rb",
+     "lib/ec2_metadata/dummy.rb",
      "lib/ec2_metadata/named_base.rb",
      "lib/ec2_metadata/revision.rb",
      "lib/ec2_metadata/root.rb",
+     "lib/hash_key_orderable.rb",
      "spec/ec2_metadata/base_spec.rb",
+     "spec/ec2_metadata/command_spec.rb",
+     "spec/ec2_metadata/dummy_spec.rb",
      "spec/ec2_metadata/revision_spec.rb",
      "spec/ec2_metadata/root_spec.rb",
      "spec/ec2_metadata_spec.rb",
+     "spec/hash_key_orderable_spec.rb",
      "spec/introduction_spec.rb",
+     "spec/rcov.opts",
      "spec/spec.opts",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/to_hash_spec.rb"
   ]
   s.homepage = %q{http://github.com/akm/ec2-metadata}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -43,11 +55,15 @@ Gem::Specification.new do |s|
   s.summary = %q{ec2-metadata provides to access metadata}
   s.test_files = [
     "spec/ec2_metadata/base_spec.rb",
+     "spec/ec2_metadata/command_spec.rb",
+     "spec/ec2_metadata/dummy_spec.rb",
      "spec/ec2_metadata/revision_spec.rb",
      "spec/ec2_metadata/root_spec.rb",
      "spec/ec2_metadata_spec.rb",
+     "spec/hash_key_orderable_spec.rb",
      "spec/introduction_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/to_hash_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
