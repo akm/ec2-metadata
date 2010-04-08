@@ -83,6 +83,7 @@ module Ec2Metadata
 
     def to_hash
       keys.inject({}) do |dest, key|
+        key = key.sub(/\/$/, '')
         value = get(key)
         dest[key] = value.respond_to?(:to_hash) ? value.to_hash : value
         dest
