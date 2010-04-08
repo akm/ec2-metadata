@@ -5,7 +5,6 @@ module Ec2Metadata
     def self.extended(obj)
       obj.open_timeout_sec ||= DEFAULT_OPEN_TIMEOUT
       obj.read_timeout_sec ||= DEFAULT_READ_TIMEOUT
-      puts obj.inspect
     end
 
     DEFAULT_OPEN_TIMEOUT = 5
