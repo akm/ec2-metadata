@@ -49,11 +49,12 @@ describe Ec2Metadata::Base do
           obj.child_keys.should == ["0"]
           obj.class.should == Ec2Metadata::Base
           key0 = obj["0"]
-          key0.to_s.should == "keypair0"
+          key0.child_keys.should == ["keypair0"]
+          key0name = key0["keypair0"]
           Ec2Metadata.should_receive(:get).with("/#{revision}/meta-data/public-keys/0/").and_return("openssh-key")
-          key0.child_keys.should == ["openssh-key"]
+          key0name.child_keys.should == ["openssh-key"]
           Ec2Metadata.should_receive(:get).with("/#{revision}/meta-data/public-keys/0/openssh-key").and_return("ssh-rsa 1234567890")
-          key0[:openssh_key].should == "ssh-rsa 1234567890"
+          key0name[:openssh_key].should == "ssh-rsa 1234567890"
         end
 
       end

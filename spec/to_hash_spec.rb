@@ -17,7 +17,8 @@ describe Ec2Metadata do
       'local-ipv4' => "10.123.123.123",
       'public-ipv4' => "75.101.241.136",
       'public-keys' => {
-        '0' => {'openssh-key' => "ssh-rsa 1234567890"}
+        '0' => {
+          'west-dev01' => {'openssh-key' => "ssh-rsa 1234567890"}}
       },
       'block-device-mapping' => {
         "ami" => "sda1",
@@ -102,8 +103,9 @@ describe Ec2Metadata do
     it "public-keys by Hash" do
       Ec2Metadata.clear_instance
       Ec2Metadata.from_hash(BASE_YAML_HASH)
-      Ec2Metadata['public-keys']['0'].keys.should == ['openssh-key']
-      Ec2Metadata['public-keys']['0']['openssh-key'].should == "ssh-rsa 1234567890"
+      Ec2Metadata['public-keys']['0'].keys.should == ['west-dev01']
+      Ec2Metadata['public-keys']['0']['west-dev01'].keys.should == ['openssh-key']
+      Ec2Metadata['public-keys']['0']['west-dev01']['openssh-key'].should == "ssh-rsa 1234567890"
       Ec2Metadata['block-device-mapping'].keys.sort.should == %w(ami ephemeral0 root swap).sort
       Ec2Metadata['block-device-mapping']['ami'].should == "sda1"
       Ec2Metadata['block-device-mapping']['ephemeral0'].should == "sda2"

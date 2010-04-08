@@ -67,7 +67,11 @@ module Ec2Metadata
 
     def new_child(child_key)
       if defined?(@child_names) && (name = @child_names[child_key])
-        NamedBase.new(name, "#{path}#{child_key}/")
+        grandchild = Base.new("#{path}#{child_key}/")
+        child = Base.new("#{path}#{child_key}/")
+        child.instance_variable_set(:@children, {name => grandchild})
+        child.instance_variable_set(:@child_keys, [name])
+        child
       else
         Base.new("#{path}#{child_key}/")
       end

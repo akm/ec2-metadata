@@ -65,12 +65,12 @@ describe Ec2Metadata do
         Ec2Metadata.should_receive(:get).with("/latest/meta-data/public-keys/1/").and_return("another-key")
         Ec2Metadata.should_receive(:get).with("/latest/meta-data/public-keys/1/another-key").and_return("xxxxxxx abcdefghij")
         Ec2Metadata[:public_keys].keys.should == ["0", '1']
-        Ec2Metadata[:public_keys][0].name.should == "keypair0"
-        Ec2Metadata[:public_keys][0].keys.should == ["openssh-key"]
-        Ec2Metadata[:public_keys][0][:openssh_key].should == "ssh-rsa 1234567890"
-        Ec2Metadata[:public_keys][1].name.should == "keypair1"
-        Ec2Metadata[:public_keys][1].keys.should == ["another-key"]
-        Ec2Metadata[:public_keys][1][:another_key].should == "xxxxxxx abcdefghij"
+        Ec2Metadata[:public_keys][0].keys.should == ["keypair0"]
+        Ec2Metadata[:public_keys][0]["keypair0"].keys.should == ["openssh-key"]
+        Ec2Metadata[:public_keys][0]["keypair0"][:openssh_key].should == "ssh-rsa 1234567890"
+        Ec2Metadata[:public_keys][1].keys.should == ["keypair1"]
+        Ec2Metadata[:public_keys][1]["keypair1"].keys.should == ["another-key"]
+        Ec2Metadata[:public_keys][1]["keypair1"][:another_key].should == "xxxxxxx abcdefghij"
       end
       
     end

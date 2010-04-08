@@ -6,7 +6,6 @@ module Ec2Metadata
 
   autoload :HttpClient, 'ec2_metadata/http_client'
   autoload :Base, 'ec2_metadata/base'
-  autoload :NamedBase, 'ec2_metadata/named_base'
   autoload :Root, 'ec2_metadata/root'
   autoload :Revision, 'ec2_metadata/revision'
   autoload :Dummy, 'ec2_metadata/dummy'
