@@ -4,6 +4,7 @@ Net::HTTP.version_1_2
 module Ec2Metadata
   DEFAULT_HOST = "169.254.169.254".freeze
 
+  autoload :HttpClient, 'ec2_metadata/http_client'
   autoload :Base, 'ec2_metadata/base'
   autoload :NamedBase, 'ec2_metadata/named_base'
   autoload :Root, 'ec2_metadata/root'
@@ -12,6 +13,8 @@ module Ec2Metadata
   autoload :Command, 'ec2_metadata/command'
 
   DEFAULT_REVISION = 'latest'
+
+  extend HttpClient
 
   class << self
     def instance
@@ -37,15 +40,6 @@ module Ec2Metadata
       instance.instance_variable_set(:@children, {revision => rev_obj})
       instance.instance_variable_set(:@child_keys, [revision])
       rev_obj.from_hash(hash)
-    end
-
-    def get(path)
-      logging("Ec2Metadata.get(#{path.inspect})") do
-        Net::HTTP.start(DEFAULT_HOST) do |http|
-          res = http.get(path)
-          res.is_a?(Net::HTTPSuccess) ? res.body : nil
-        end
-      end
     end
 
     def formalize_key(key)

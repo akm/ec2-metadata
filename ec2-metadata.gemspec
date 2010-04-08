@@ -57,6 +57,7 @@ Gem::Specification.new do |s|
     "spec/ec2_metadata/base_spec.rb",
      "spec/ec2_metadata/command_spec.rb",
      "spec/ec2_metadata/dummy_spec.rb",
+     "spec/ec2_metadata/http_client_spec.rb",
      "spec/ec2_metadata/revision_spec.rb",
      "spec/ec2_metadata/root_spec.rb",
      "spec/ec2_metadata_spec.rb",

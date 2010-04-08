@@ -5,17 +5,20 @@ require 'ec2_metadata'
 require 'yaml'
 require 'optparse'
 
+options = {:api_version => 'latest'}
+
 ARGV.options do |o|
   o.banner = 'Usage: ec2-metadata [options]'
   
   o.on("-a [api-version]", '--api-version', 
     "Specify an API version. default is 'latest'.") do |v|
-    Ec2Metadata::Command.show(v)
+    options[:api_version] = v
   end
 
   o.on("-V", '--display-api-versions', 
     "Display API versions and quit.") do
     Ec2Metadata::Command.show_api_versions
+    exit
   end
 
   o.separator("General Options:")
@@ -23,9 +26,13 @@ ARGV.options do |o|
   o.on("-v", '--version', "Show the version number.") do
     puts("ec2-metadata " << 
       IO.read(File.join(File.dirname(__FILE__), "../VERSION")))
+    exit
   end
 
-  o.on("-h", '--help', "Show this help message."){ puts o}
+  o.on("-h", '--help', "Show this help message."){ puts o; exit}
 
   o.parse!
 end
+
+Ec2Metadata::Command.show(options[:api_version])
+
