@@ -21,6 +21,12 @@ ARGV.options do |o|
     exit
   end
 
+  o.on("-d", '--display-dummy-yaml', 
+    "Display a dummy YAML and quit.") do
+    Ec2Metadata::Command.show_dummy_yaml
+    exit
+  end
+
   o.separator("General Options:")
 
   o.on("-v", '--version', "Show the version number.") do

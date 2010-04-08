@@ -43,6 +43,11 @@ module Ec2Metadata
         end
       end
 
+      def show_dummy_yaml
+        show_yaml_path_if_loaded
+        puts IO.read(File.expand_path(File.join(File.dirname(__FILE__), 'dummy.yml')))
+      end
+
       private
       def timeout
         begin
