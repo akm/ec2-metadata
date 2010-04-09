@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'ec2_metadata'
 require 'hash_key_orderable'
+require 'yaml'
 
 module Ec2Metadata
   module Command

@@ -1,3 +1,6 @@
+require 'erb'
+require 'yaml'
+
 module Ec2Metadata
   module Dummy
     YAML_FILENAME = 'ec2_metadata.yml'.freeze
