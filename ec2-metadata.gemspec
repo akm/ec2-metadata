@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ec2-metadata}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Takeshi AKIMA"]
-  s.date = %q{2010-04-08}
+  s.date = %q{2010-04-09}
   s.default_executable = %q{ec2-metadata}
   s.description = %q{ec2-metadata provides to access metadata, and you can use in outside of ec2 like in ec2}
   s.email = %q{akm2000@gmail.com}
