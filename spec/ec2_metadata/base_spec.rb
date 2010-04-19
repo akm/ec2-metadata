@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.expand_path(File.join(File.dirname(__FILE__), '../spec_helper'))
 
 describe Ec2Metadata::Base do
@@ -59,8 +60,18 @@ describe Ec2Metadata::Base do
 
       end
     end
+  end
 
-
+  describe :default_child do
+    it "stack level too deep" do
+      Ec2Metadata.should_receive(:get).with("/latest/").once.and_return(DATA_TYPES.join("\n"))
+      # 0.2.1で発生しうる、SystemStackError: stack level too deep を無理に発生させている
+      latest = Ec2Metadata["latest"]
+      latest.instance_variable_set(:@default_child_key, 'unexist-meta-data')
+      lambda{
+        latest["instance_id"].should == nil
+      }.should raise_error(Ec2Metadata::NotFoundError)
+    end
   end
   
 end

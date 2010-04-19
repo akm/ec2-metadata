@@ -45,6 +45,7 @@ module Ec2Metadata
               new_child(child_key) :
               Ec2Metadata.get("#{path}#{child_key}")
           else
+            raise NotFoundError, "#{path}#{child_key} not found as default key" if @getting_default_child
             raise NotFoundError, "#{path}#{child_key} not found" unless default_child
             result = default_child.get(child_key)
           end
@@ -80,8 +81,16 @@ module Ec2Metadata
     alias_method :[], :get
 
     def default_child
+      return @default_child if @default_child
       logging("default_child") do
-        @default_child ||= get(default_child_key) if default_child_key
+        if default_child_key
+          @getting_default_child = true
+          begin
+            @default_child = get(default_child_key) 
+          ensure
+            @getting_default_child = false
+          end
+        end
       end
     end
 
