@@ -21,7 +21,7 @@ module Ec2Metadata
       end
 
       def search_and_load_yaml
-        paths = Dir.glob(yaml_paths.map{|path| File.expand_path(path)})
+        paths = Dir.glob(yaml_paths.map{|path| File.expand_path(path) rescue nil}.compact)
         load_yaml(paths.first) unless paths.empty?
       end
 
@@ -32,7 +32,7 @@ module Ec2Metadata
         Ec2Metadata.from_hash(YAML.load(text))
         @loaded_yaml_path = path
       end
-      
+
       def loaded_yaml_path
         @loaded_yaml_path
       end
